@@ -57,11 +57,37 @@ class FlutterGooglePlacesSdk {
       });
   }
 
+  /// Autocomplete wrapper around Android Places SDK
+  /// Finds autocomplete predictions [FindAutocompletePredictionsResponse] based on a [query].
+  /// Optional parameters are the list of [countries] (ISO 3166-1 Alpha-2: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2),
+  /// [newSessionToken] to create a new session token to the following requests and
+  /// an [origin] location. For more info, check out: https://developers.google.com/places/android-sdk/autocomplete
   Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(
       String query,
-      {List<String> countries}) {
+      {List<String> countries,
+      bool newSessionToken,
+      Location origin}) {
     return _addMethodCall(() =>
-        platform.findAutocompletePredictions(query, countries: countries));
+        platform.findAutocompletePredictions(
+          query,
+          countries: countries,
+          newSessionToken: newSessionToken,
+          origin: origin,
+        ));
+  }
+
+  /// Place details wrapper around Android Places SDK
+  /// Finds place details [PlaceDetails] given a [placeId] containing the list of [fields] passed to the API.
+  /// For more info, check out: https://developers.google.com/places/android-sdk/place-details
+  Future<PlaceDetails> fetchPlaceDetails(
+    String placeId,
+    List<PlaceField> fields
+  ) {
+    return _addMethodCall(() =>
+      platform.fetchPlaceDetails(
+        placeId,
+        fields,
+      ));
   }
 
   Future<bool> isInitialized() {

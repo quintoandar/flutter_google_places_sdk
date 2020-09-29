@@ -13,7 +13,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_plugin_android_lifecycle: ^1.0.8
-  flutter_google_places_sdk_platform_interface: ^0.1.0+1
+  flutter_google_places_sdk_platform_interface:
+    git:
+      url: git@github.com:quintoandar/flutter_google_places_sdk.git
+      path: flutter_google_places_sdk_platform_interface
 
 dev_dependencies:
   flutter_test:
