@@ -16,7 +16,6 @@ dependencies:
   flutter_google_places_sdk_platform_interface:
     git:
       url: git@github.com:quintoandar/flutter_google_places_sdk.git
-      ref: feat/increment-autocomplete-place-details
       path: flutter_google_places_sdk_platform_interface
 
 dev_dependencies:
