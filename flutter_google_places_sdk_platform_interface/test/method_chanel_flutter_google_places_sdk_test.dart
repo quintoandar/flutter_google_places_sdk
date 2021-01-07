@@ -65,11 +65,10 @@ void main() {
       expect(
         log,
         <Matcher>[
-          isMethodCall('findAutocompletePredictions',
-              arguments: <String, Object>{
-                'query': testQuery,
-                'countries': testCountries,
-              })
+          isMethodCall('findAutocompletePredictions', arguments: <String, Object>{
+            'query': testQuery,
+            'countries': testCountries,
+          })
         ],
       );
     });
@@ -80,8 +79,6 @@ class FlutterGooglePlacesSdkPlatformMock extends Mock
     with MockPlatformInterfaceMixin
     implements FlutterGooglePlacesSdkPlatform {}
 
-class ImplementsFlutterGooglePlacesSdkPlatform extends Mock
-    implements FlutterGooglePlacesSdkPlatform {}
+class ImplementsFlutterGooglePlacesSdkPlatform extends Mock implements FlutterGooglePlacesSdkPlatform {}
 
-class ExtendsFlutterGooglePlacesSdkPlatform
-    extends FlutterGooglePlacesSdkPlatform {}
+class ExtendsFlutterGooglePlacesSdkPlatform extends FlutterGooglePlacesSdkPlatform {}
