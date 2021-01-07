@@ -4,3 +4,4 @@ export 'location.dart';
 export 'place_details.dart';
 export 'place_field.dart';
 export 'place_types.dart';
+export 'viewport.dart';
