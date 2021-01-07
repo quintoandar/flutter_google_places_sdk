@@ -1,6 +1,7 @@
 enum PlaceField {
   location,
   types,
+  viewport,
 }
 
 extension PlaceFieldDescriptor on PlaceField {
@@ -13,6 +14,8 @@ extension PlaceFieldDescriptor on PlaceField {
         return 'LAT_LNG';
       case PlaceField.types:
         return 'TYPES';
+      case PlaceField.viewport:
+        return 'VIEWPORT';
       default:
         return null;
     }
