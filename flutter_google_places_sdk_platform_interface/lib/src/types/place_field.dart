@@ -1,5 +1,7 @@
 enum PlaceField {
-  location
+  location,
+  types,
+  viewport,
 }
 
 extension PlaceFieldDescriptor on PlaceField {
@@ -8,8 +10,14 @@ extension PlaceFieldDescriptor on PlaceField {
   /// https://developers.google.com/places/android-sdk/reference/com/google/android/libraries/places/api/model/Place.Field
   String value() {
     switch (this) {
-      case PlaceField.location: return 'LAT_LNG';
-      default: return null;
+      case PlaceField.location:
+        return 'LAT_LNG';
+      case PlaceField.types:
+        return 'TYPES';
+      case PlaceField.viewport:
+        return 'VIEWPORT';
+      default:
+        return null;
     }
   }
 }

@@ -152,6 +152,17 @@ class FlutterGooglePlacesSdkPlugin : FlutterPlugin, MethodCallHandler {
             "location" to mapOf(
               "lat" to result?.getPlace()?.getLatLng()?.latitude,
               "lng" to result?.getPlace()?.getLatLng()?.longitude
+            ),
+            "types" to result?.getPlace()?.getTypes()?.map { item -> item.name },
+            "viewport" to mapOf(
+              "northeast" to mapOf(
+                "lat" to result?.getPlace()?.getViewport()?.northeast?.latitude,
+                "lng" to result?.getPlace()?.getViewport()?.northeast?.longitude
+              ),
+              "southwest" to mapOf(
+                "lat" to result?.getPlace()?.getViewport()?.southwest?.latitude,
+                "lng" to result?.getPlace()?.getViewport()?.southwest?.longitude
+              )
             )
     )
   }
