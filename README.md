@@ -10,8 +10,7 @@ This fork adds some functionality to the existent APIs. Here are the improvement
   - Add `countryCode: List<String>` param
   - Add `origin: Location` param
   - Add `bounds: Bounds` param
-  - Add `typeFilter: TypeFilter` param
-  
+
 - Place Details implementation with the following params:
   - `placeId`
   - `fields: List<PlaceField>`
