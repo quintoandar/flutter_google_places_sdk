@@ -11,8 +11,7 @@ const String _CHANNEL_NAME = 'plugins.msh.com/flutter_google_places_sdk';
 const MethodChannel _channel = MethodChannel(_CHANNEL_NAME);
 
 // An implementation of [FlutterGooglePlacesSdkPlatform] that uses method channels.
-class FlutterGooglePlacesSdkMethodChannel
-    extends FlutterGooglePlacesSdkPlatform {
+class FlutterGooglePlacesSdkMethodChannel extends FlutterGooglePlacesSdkPlatform {
   static const CHANNEL_NAME = _CHANNEL_NAME;
 
   @override
@@ -41,19 +40,21 @@ class FlutterGooglePlacesSdkMethodChannel
   /* Client methods */
   @override
   Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(
-      String query,
-      {List<String> countries,
-      bool newSessionToken,
-      Location origin}) {
+    String query, {
+    List<String> countries,
+    bool newSessionToken,
+    Location origin,
+    Bounds bounds,
+  }) {
     if (query?.isEmpty ?? true) {
       throw ArgumentError('Argument query can not be empty');
     }
-    return _channel.invokeListMethod<Map<dynamic, dynamic>>(
-        'findAutocompletePredictions', {
+    return _channel.invokeListMethod<Map<dynamic, dynamic>>('findAutocompletePredictions', {
       'query': query,
       'countries': countries,
       'newSessionToken': newSessionToken,
       'origin': origin.toMap(),
+      'bounds': bounds.toMap()
     }).then(_responseFromResult);
   }
 
@@ -71,8 +72,7 @@ class FlutterGooglePlacesSdkMethodChannel
     String placeId,
     List<PlaceField> fields,
   ) {
-    return _channel.invokeMapMethod(
-        'fetchPlace', {
+    return _channel.invokeMapMethod('fetchPlace', {
       'placeId': placeId,
       'fields': fields.map((e) => e.value()).toList(),
     }).then(_responseFromPlaceDetails);

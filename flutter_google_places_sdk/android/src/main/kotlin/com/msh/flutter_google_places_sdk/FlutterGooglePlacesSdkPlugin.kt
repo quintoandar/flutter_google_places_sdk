@@ -7,6 +7,8 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -90,17 +92,36 @@ class FlutterGooglePlacesSdkPlugin : FlutterPlugin, MethodCallHandler {
       requestBuilder.setOrigin(originLocation)
     }
 
+    call.argument<Map<String, Map<String, Double?>?>>("bounds")?.let { bounds ->
+      var northeast = bounds["northeast"] ?: mapOf()
+      var southwest = bounds["southwest"] ?: mapOf()
+
+      var locationBias = RectangularBounds.newInstance(
+        LatLng(
+          southwest["lat"] ?: 0.0, 
+          southwest["lng"] ?: 0.0
+        ),
+        LatLng(
+          northeast["lat"] ?: 0.0, 
+          northeast["lng"] ?: 0.0
+        )
+      )
+      
+      requestBuilder.setLocationBias(locationBias)
+    }
+
     val query = call.argument<String>("query")
 
     var request = requestBuilder
       .setSessionToken(token)
+      .setTypeFilter(TypeFilter.GEOCODE)
       .setQuery(query)
       .build()
-
+  
     client.findAutocompletePredictions(request).addOnCompleteListener { task ->
       if (task.isSuccessful) {
         val resultList = responseToList(task.result)
-        print("Result: $resultList");
+        println("Result: $resultList");
         result.success(resultList)
       } else {
         val exception = task.exception

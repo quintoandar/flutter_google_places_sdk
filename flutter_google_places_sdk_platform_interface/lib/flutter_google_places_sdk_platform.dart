@@ -8,16 +8,14 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 abstract class FlutterGooglePlacesSdkPlatform extends PlatformInterface {
   FlutterGooglePlacesSdkPlatform() : super(token: _token);
 
-  static const AssetImage ASSET_POWERED_BY_GOOGLE_ON_WHITE = AssetImage(
-      'assets/google/powered_by_google_on_white.png',
+  static const AssetImage ASSET_POWERED_BY_GOOGLE_ON_WHITE = AssetImage('assets/google/powered_by_google_on_white.png',
       package: 'flutter_google_places_sdk_platform_interface');
 
   static const AssetImage ASSET_POWERED_BY_GOOGLE_ON_NON_WHITE = AssetImage(
       'assets/google/powered_by_google_on_non_white.png',
       package: 'flutter_google_places_sdk_platform_interface');
 
-  static FlutterGooglePlacesSdkPlatform _instance =
-      FlutterGooglePlacesSdkMethodChannel();
+  static FlutterGooglePlacesSdkPlatform _instance = FlutterGooglePlacesSdkMethodChannel();
 
   static final Object _token = Object();
 
@@ -41,19 +39,19 @@ abstract class FlutterGooglePlacesSdkPlatform extends PlatformInterface {
   }
 
   Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(
-      String query,
-      {List<String> countries,
-      bool newSessionToken,
-      Location origin,}) {
-    throw UnimplementedError(
-        'findAutocompletePredictions() has not been implemented.');
+    String query, {
+    List<String> countries,
+    bool newSessionToken,
+    Location origin,
+    Bounds bounds,
+  }) {
+    throw UnimplementedError('findAutocompletePredictions() has not been implemented.');
   }
 
   Future<PlaceDetails> fetchPlaceDetails(
     String placeId,
     List<PlaceField> fields,
   ) {
-    throw UnimplementedError(
-        'fetchPlaceDetails() has not been implemented.');
+    throw UnimplementedError('fetchPlaceDetails() has not been implemented.');
   }
 }

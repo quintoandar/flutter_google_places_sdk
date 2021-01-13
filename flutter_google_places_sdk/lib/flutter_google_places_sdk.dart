@@ -61,13 +61,19 @@ class FlutterGooglePlacesSdk {
   /// Optional parameters are the list of [countries] (ISO 3166-1 Alpha-2: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2),
   /// [newSessionToken] to create a new session token to the following requests and
   /// an [origin] location. For more info, check out: https://developers.google.com/places/android-sdk/autocomplete
-  Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(String query,
-      {List<String> countries, bool newSessionToken, Location origin}) {
+  Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(
+    String query, {
+    List<String> countries,
+    bool newSessionToken,
+    Location origin,
+    Bounds bounds,
+  }) {
     return _addMethodCall(() => platform.findAutocompletePredictions(
           query,
           countries: countries,
           newSessionToken: newSessionToken,
           origin: origin,
+          bounds: bounds,
         ));
   }
 
