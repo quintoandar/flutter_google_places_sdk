@@ -84,30 +84,41 @@ class FlutterGooglePlacesSdkPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     call.argument<Map<String, Double?>>("origin")?.let { origin ->
-      val originLocation = LatLng(
-        origin["lat"] ?: 0.0,
-        origin["lng"] ?: 0.0
-      )
+      var shouldSetOrigin = origin["lat"] != null && origin["lng"] != null;
 
-      requestBuilder.setOrigin(originLocation)
+      if (shouldSetOrigin) {
+        val originLocation = LatLng(
+          origin["lat"] as Double,
+          origin["lng"] as Double
+        )
+
+        requestBuilder.setOrigin(originLocation)
+      }
     }
 
     call.argument<Map<String, Map<String, Double?>?>>("bounds")?.let { bounds ->
       var northeast = bounds["northeast"] ?: mapOf()
       var southwest = bounds["southwest"] ?: mapOf()
 
-      var locationBias = RectangularBounds.newInstance(
-        LatLng(
-          southwest["lat"] ?: 0.0, 
-          southwest["lng"] ?: 0.0
-        ),
-        LatLng(
-          northeast["lat"] ?: 0.0, 
-          northeast["lng"] ?: 0.0
+      var shouldSetLocationBias = southwest["lat"] != null && 
+        southwest["lng"] != null && 
+        northeast["lat"] != null && 
+        northeast["lng"] != null;
+
+      if (shouldSetLocationBias) {
+        var locationBias = RectangularBounds.newInstance(
+          LatLng(
+            southwest["lat"] as Double, 
+            southwest["lng"] as Double
+          ),
+          LatLng(
+            northeast["lat"] as Double, 
+            northeast["lng"] as Double
+          )
         )
-      )
-      
-      requestBuilder.setLocationBias(locationBias)
+
+        requestBuilder.setLocationBias(locationBias)
+      }
     }
 
     val query = call.argument<String>("query")
@@ -121,7 +132,6 @@ class FlutterGooglePlacesSdkPlugin : FlutterPlugin, MethodCallHandler {
     client.findAutocompletePredictions(request).addOnCompleteListener { task ->
       if (task.isSuccessful) {
         val resultList = responseToList(task.result)
-        println("Result: $resultList");
         result.success(resultList)
       } else {
         val exception = task.exception

@@ -54,8 +54,8 @@ class FlutterGooglePlacesSdkMethodChannel extends FlutterGooglePlacesSdkPlatform
       'query': query,
       'countries': countries,
       'newSessionToken': newSessionToken,
-      'origin': origin.toMap(),
-      'bounds': bounds.toMap()
+      'origin': origin?.toMap(),
+      'bounds': bounds?.toMap()
     }).then(_responseFromResult);
   }
 
