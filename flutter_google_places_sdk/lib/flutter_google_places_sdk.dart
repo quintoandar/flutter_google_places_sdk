@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 
 class FlutterGooglePlacesSdk {
@@ -66,7 +66,7 @@ class FlutterGooglePlacesSdk {
     List<String> countries,
     bool newSessionToken,
     Location origin,
-    Bounds bounds,
+    Viewport bounds,
   }) {
     return _addMethodCall(() => platform.findAutocompletePredictions(
           query,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 import 'package:flutter_google_places_sdk_platform_interface/method_chanel_flutter_google_places_sdk.dart';
 import 'package:flutter_google_places_sdk_platform_interface/src/types/find_autocomplete_predictions_response.dart';
@@ -43,7 +43,7 @@ abstract class FlutterGooglePlacesSdkPlatform extends PlatformInterface {
     List<String> countries,
     bool newSessionToken,
     Location origin,
-    Bounds bounds,
+    Viewport bounds,
   }) {
     throw UnimplementedError('findAutocompletePredictions() has not been implemented.');
   }

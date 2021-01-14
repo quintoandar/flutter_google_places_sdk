@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 
 import 'src/types/place_details.dart';
+import 'src/types/viewport.dart';
 
 const String _CHANNEL_NAME = 'plugins.msh.com/flutter_google_places_sdk';
 
@@ -44,7 +45,7 @@ class FlutterGooglePlacesSdkMethodChannel extends FlutterGooglePlacesSdkPlatform
     List<String> countries,
     bool newSessionToken,
     Location origin,
-    Bounds bounds,
+    Viewport bounds,
   }) {
     if (query?.isEmpty ?? true) {
       throw ArgumentError('Argument query can not be empty');
