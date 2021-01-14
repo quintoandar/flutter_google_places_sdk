@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 
 class FlutterGooglePlacesSdk {
@@ -61,13 +61,19 @@ class FlutterGooglePlacesSdk {
   /// Optional parameters are the list of [countries] (ISO 3166-1 Alpha-2: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2),
   /// [newSessionToken] to create a new session token to the following requests and
   /// an [origin] location. For more info, check out: https://developers.google.com/places/android-sdk/autocomplete
-  Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(String query,
-      {List<String> countries, bool newSessionToken, Location origin}) {
+  Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(
+    String query, {
+    List<String> countries,
+    bool newSessionToken,
+    Location origin,
+    Viewport bounds,
+  }) {
     return _addMethodCall(() => platform.findAutocompletePredictions(
           query,
           countries: countries,
           newSessionToken: newSessionToken,
           origin: origin,
+          bounds: bounds,
         ));
   }
 

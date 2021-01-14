@@ -7,6 +7,8 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -82,25 +84,54 @@ class FlutterGooglePlacesSdkPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     call.argument<Map<String, Double?>>("origin")?.let { origin ->
-      val originLocation = LatLng(
-        origin["lat"] ?: 0.0,
-        origin["lng"] ?: 0.0
-      )
+      var shouldSetOrigin = origin["lat"] != null && origin["lng"] != null;
 
-      requestBuilder.setOrigin(originLocation)
+      if (shouldSetOrigin) {
+        val originLocation = LatLng(
+          origin["lat"] as Double,
+          origin["lng"] as Double
+        )
+
+        requestBuilder.setOrigin(originLocation)
+      }
+    }
+
+    call.argument<Map<String, Map<String, Double?>?>>("bounds")?.let { bounds ->
+      var northeast = bounds["northeast"] ?: mapOf()
+      var southwest = bounds["southwest"] ?: mapOf()
+
+      var shouldSetLocationBias = southwest["lat"] != null && 
+        southwest["lng"] != null && 
+        northeast["lat"] != null && 
+        northeast["lng"] != null;
+
+      if (shouldSetLocationBias) {
+        var locationBias = RectangularBounds.newInstance(
+          LatLng(
+            southwest["lat"] as Double, 
+            southwest["lng"] as Double
+          ),
+          LatLng(
+            northeast["lat"] as Double, 
+            northeast["lng"] as Double
+          )
+        )
+
+        requestBuilder.setLocationBias(locationBias)
+      }
     }
 
     val query = call.argument<String>("query")
 
     var request = requestBuilder
       .setSessionToken(token)
+      .setTypeFilter(TypeFilter.GEOCODE)
       .setQuery(query)
       .build()
-
+  
     client.findAutocompletePredictions(request).addOnCompleteListener { task ->
       if (task.isSuccessful) {
         val resultList = responseToList(task.result)
-        print("Result: $resultList");
         result.success(resultList)
       } else {
         val exception = task.exception
