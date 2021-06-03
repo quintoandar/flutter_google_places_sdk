@@ -12,16 +12,19 @@ const String _CHANNEL_NAME = 'plugins.msh.com/flutter_google_places_sdk';
 const MethodChannel _channel = MethodChannel(_CHANNEL_NAME);
 
 // An implementation of [FlutterGooglePlacesSdkPlatform] that uses method channels.
-class FlutterGooglePlacesSdkMethodChannel extends FlutterGooglePlacesSdkPlatform {
+class FlutterGooglePlacesSdkMethodChannel
+    extends FlutterGooglePlacesSdkPlatform {
   static const CHANNEL_NAME = _CHANNEL_NAME;
 
   @override
   Future<bool> isInitialized() {
-    return _channel.invokeMethod<bool>('isInitialized');
+    return _channel
+        .invokeMethod<bool>('isInitialized')
+        .then((result) => Future.value(result ?? false));
   }
 
   @override
-  Future<void> initialize(String apiKey, {Locale locale}) {
+  Future<void> initialize(String apiKey, {Locale? locale}) {
     return _channel.invokeMethod<void>('initialize', {
       'apiKey': apiKey,
       'locale': locale == null
@@ -42,15 +45,16 @@ class FlutterGooglePlacesSdkMethodChannel extends FlutterGooglePlacesSdkPlatform
   @override
   Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(
     String query, {
-    List<String> countries,
-    bool newSessionToken,
-    Location origin,
-    Viewport bounds,
+    List<String>? countries,
+    bool? newSessionToken,
+    Location? origin,
+    Viewport? bounds,
   }) {
-    if (query?.isEmpty ?? true) {
+    if (query.isEmpty) {
       throw ArgumentError('Argument query can not be empty');
     }
-    return _channel.invokeListMethod<Map<dynamic, dynamic>>('findAutocompletePredictions', {
+    return _channel.invokeListMethod<Map<dynamic, dynamic>>(
+        'findAutocompletePredictions', {
       'query': query,
       'countries': countries,
       'newSessionToken': newSessionToken,
@@ -59,7 +63,8 @@ class FlutterGooglePlacesSdkMethodChannel extends FlutterGooglePlacesSdkPlatform
     }).then(_responseFromResult);
   }
 
-  FindAutocompletePredictionsResponse _responseFromResult(List<dynamic> value) {
+  FindAutocompletePredictionsResponse _responseFromResult(
+      List<dynamic>? value) {
     final items = (value ?? <Map<dynamic, dynamic>>[])
         .map((item) => item.cast<String, dynamic>())
         .map((map) => AutocompletePrediction.fromMap(map))

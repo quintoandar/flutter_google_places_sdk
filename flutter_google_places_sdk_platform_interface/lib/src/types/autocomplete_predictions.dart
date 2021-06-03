@@ -8,22 +8,22 @@ class AutocompletePrediction {
   });
 
   /// the straight-line distance between the place being referred to by getPlaceId() and the origin specified in the request.
-  final int distanceMeters;
+  final int? distanceMeters;
 
   /// the place ID of the place being referred to by this prediction.
-  final String placeId;
+  final String? placeId;
 
   /// the list of place types associated with the place referred to by getPlaceId()
   // List<Place.Type> placeTypes;
 
   /// the primary text of a place.
-  final String primaryText;
+  final String? primaryText;
 
   /// the secondary text of a place.
-  final String secondaryText;
+  final String? secondaryText;
 
   /// The full text of a place.
-  final String fullText;
+  final String? fullText;
 
   @override
   bool operator ==(Object other) =>

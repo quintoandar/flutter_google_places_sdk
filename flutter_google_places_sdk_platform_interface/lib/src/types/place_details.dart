@@ -4,16 +4,16 @@ import 'package:flutter_google_places_sdk_platform_interface/src/types/viewport.
 
 class PlaceDetails {
   const PlaceDetails({
-    this.location,
-    this.types,
-    this.viewport,
+    required this.location,
+    required this.types,
+    required this.viewport,
   });
 
   /// The place location
   final Location location;
 
   /// Place types
-  final List<Types> types;
+  final List<Types?> types;
 
   /// Viewport
   final Viewport viewport;
@@ -42,7 +42,9 @@ class PlaceDetails {
 
   static PlaceDetails fromMap(Map<String, dynamic> map) => PlaceDetails(
         location: Location.fromMap(map['location']),
-        types: List<dynamic>.from(map['types']).map((e) => TypesHelper.from(e as String)).toList(),
+        types: List<dynamic>.from(map['types'])
+            .map((e) => TypesHelper.from(e as String))
+            .toList(),
         viewport: Viewport.fromMap(map['viewport']),
       );
 }

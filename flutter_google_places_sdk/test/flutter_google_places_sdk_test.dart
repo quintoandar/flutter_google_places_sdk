@@ -17,7 +17,7 @@ void main() {
 //  FlutterGooglePlacesSdkPlatform.instance = mock;
 
   final List<MethodCall> log = <MethodCall>[];
-  FlutterGooglePlacesSdk flutterGooglePlacesSdk;
+  late FlutterGooglePlacesSdk flutterGooglePlacesSdk;
 
   const kPrediction1 = AutocompletePrediction(
     placeId: 'mwzmsk-iamsdcim',
@@ -44,7 +44,7 @@ void main() {
   const String kDefaultApiKey = 'test-api-key-23';
   const Locale kDefaultLocale = Locale('he');
 
-  Map<String, dynamic> responses;
+  late Map<String, dynamic> responses;
 
   Matcher _getInitializeMatcher() {
     return isMethodCall('initialize', arguments: {
@@ -116,6 +116,9 @@ void main() {
                 arguments: <String, dynamic>{
                   'query': queryTest,
                   'countries': countriesTest,
+                  'newSessionToken': null,
+                  'origin': null,
+                  'bounds': null,
                 }),
           ],
         );

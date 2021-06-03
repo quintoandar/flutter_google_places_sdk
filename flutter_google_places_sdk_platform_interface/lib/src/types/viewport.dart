@@ -2,8 +2,8 @@ import 'package:flutter_google_places_sdk_platform_interface/flutter_google_plac
 
 class Viewport {
   const Viewport({
-    this.northeast,
-    this.southwest,
+    required this.northeast,
+    required this.southwest,
   });
 
   final Location northeast, southwest;

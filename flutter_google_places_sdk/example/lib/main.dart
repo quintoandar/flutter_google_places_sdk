@@ -57,11 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
           TextFormField(
             onChanged: _onTextChanged,
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: _looking == true ? null : _predict,
             child: const Text('Predict'),
           ),
-          Image(image: FlutterGooglePlacesSdkPlatform.ASSET_POWERED_BY_GOOGLE_ON_WHITE),
+          Image(
+              image: FlutterGooglePlacesSdkPlatform
+                  .ASSET_POWERED_BY_GOOGLE_ON_WHITE),
           _buildErrorWidget(),
           Column(
             mainAxisSize: MainAxisSize.min,

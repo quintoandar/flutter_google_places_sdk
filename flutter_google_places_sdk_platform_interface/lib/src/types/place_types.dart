@@ -142,8 +142,9 @@ enum Types {
 }
 
 extension TypesHelper on Types {
-  static Types from(String literal) {
-    final entries = Types.values.map((e) => MapEntry(e.toString().replaceFirst('Types.', ''), e));
+  static Types? from(String literal) {
+    final entries = Types.values
+        .map((e) => MapEntry(e.toString().replaceFirst('Types.', ''), e));
     final map = Map.fromEntries(entries);
     return map[literal];
   }
