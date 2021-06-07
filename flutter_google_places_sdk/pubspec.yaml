@@ -13,6 +13,7 @@ dependencies:
   flutter_google_places_sdk_platform_interface:
     git:
       url: git@github.com:quintoandar/flutter_google_places_sdk.git
+      ref: flutter-2
       path: flutter_google_places_sdk_platform_interface
 
 dev_dependencies:
