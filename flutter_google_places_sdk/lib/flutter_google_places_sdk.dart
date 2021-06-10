@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter_google_places_sdk_platform_interface/flutter_google_places_sdk_platform_interface.dart';
 
 class FlutterGooglePlacesSdk {
-  FlutterGooglePlacesSdk(this.apiKey, {this.locale}) : assert(apiKey != null);
+  FlutterGooglePlacesSdk(this.apiKey, {this.locale});
 
   static const AssetImage ASSET_POWERED_BY_GOOGLE_ON_WHITE =
       FlutterGooglePlacesSdkPlatform.ASSET_POWERED_BY_GOOGLE_ON_WHITE;
@@ -12,24 +12,28 @@ class FlutterGooglePlacesSdk {
   static const AssetImage ASSET_POWERED_BY_GOOGLE_ON_NON_WHITE =
       FlutterGooglePlacesSdkPlatform.ASSET_POWERED_BY_GOOGLE_ON_NON_WHITE;
 
-  static FlutterGooglePlacesSdkPlatform platform = FlutterGooglePlacesSdkPlatform.instance;
+  static FlutterGooglePlacesSdkPlatform platform =
+      FlutterGooglePlacesSdkPlatform.instance;
 
   final String apiKey;
-  final Locale locale;
+  final Locale? locale;
 
-  Future<void> _lastMethodCall;
-  Future<void> _initialization;
+  Future<void>? _lastMethodCall;
+  Future<void>? _initialization;
 
   Future<T> _addMethodCall<T>(Future<T> Function() method) async {
     Future<T> response;
+
     if (_lastMethodCall == null) {
       response = _callMethod(method);
     } else {
-      response = _lastMethodCall.then((_) {
+      response = _lastMethodCall!.then((_) {
         return _callMethod(method);
       });
     }
+
     _lastMethodCall = _waitFor(response);
+
     return response;
   }
 
@@ -52,7 +56,6 @@ class FlutterGooglePlacesSdk {
     return _initialization ??= platform.initialize(apiKey, locale: locale)
       ..catchError((dynamic err) {
         print('FlutterGooglePlacesSdk::_ensureInitialized error: $err');
-        _initialization = null;
       });
   }
 
@@ -63,10 +66,10 @@ class FlutterGooglePlacesSdk {
   /// an [origin] location. For more info, check out: https://developers.google.com/places/android-sdk/autocomplete
   Future<FindAutocompletePredictionsResponse> findAutocompletePredictions(
     String query, {
-    List<String> countries,
-    bool newSessionToken,
-    Location origin,
-    Viewport bounds,
+    List<String>? countries,
+    bool? newSessionToken,
+    Location? origin,
+    Viewport? bounds,
   }) {
     return _addMethodCall(() => platform.findAutocompletePredictions(
           query,
@@ -80,7 +83,8 @@ class FlutterGooglePlacesSdk {
   /// Place details wrapper around Android Places SDK
   /// Finds place details [PlaceDetails] given a [placeId] containing the list of [fields] passed to the API.
   /// For more info, check out: https://developers.google.com/places/android-sdk/place-details
-  Future<PlaceDetails> fetchPlaceDetails(String placeId, List<PlaceField> fields) {
+  Future<PlaceDetails> fetchPlaceDetails(
+      String placeId, List<PlaceField> fields) {
     return _addMethodCall(() => platform.fetchPlaceDetails(
           placeId,
           fields,

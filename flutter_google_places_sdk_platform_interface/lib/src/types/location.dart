@@ -1,12 +1,18 @@
 class Location {
-  const Location({this.lat, this.lng});
+  const Location({
+    required this.lat,
+    required this.lng,
+  });
 
   final double lat, lng;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Location && runtimeType == other.runtimeType && lat == other.lat && lng == other.lng;
+      other is Location &&
+          runtimeType == other.runtimeType &&
+          lat == other.lat &&
+          lng == other.lng;
 
   @override
   int get hashCode => lat.hashCode ^ lng.hashCode;
