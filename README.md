@@ -1,4 +1,4 @@
-# flutter_google_places_sdk
+# flutter_google_places_sdk <img src="https://gist.githubusercontent.com/wescosta/26884502a355b6546177db7869b8e19e/raw/037905e760e86d6c7d6150d07edcb15826e3e66b/null-safety-badge.svg" width="80" height="30" alt="This repo supports the null safety language feature.">
 Flutter plugin for google places native sdk
 
 ### What
